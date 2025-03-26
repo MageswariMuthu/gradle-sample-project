@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Publish JUnit Results') {
             steps {
-                junit 'build/test-results/test/*.xml' // JUnit test results location
+                junit 'app/build/test-results/test/*.xml' // JUnit test results location
             }
         }
 
