@@ -9,6 +9,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'java'
 }
 
 repositories {
@@ -39,7 +40,16 @@ java {
     }
 }
 
+// Ensure the JAR file includes the Main-Class for execution
+jar {
+    manifest {
+        attributes(
+            'Main-Class': application.mainClass.get()
+        )
+    }
+}
+
 application {
     // Define the main class for the application.
-    mainClass = 'org.example.App'
+    mainClass = 'org.example.App' // Ensure this matches your Java package and class
 }
