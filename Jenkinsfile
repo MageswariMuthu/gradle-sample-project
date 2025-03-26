@@ -18,6 +18,11 @@ pipeline {
                 sh './gradlew clean build' // Using the wrapper for consistency
             }
         }
+        stage('Publish JUnit Results') {
+            steps {
+                junit 'build/test-results/test/*.xml' // JUnit test results location
+            }
+        }
 
         stage('Archive Artifact') {
             steps {
