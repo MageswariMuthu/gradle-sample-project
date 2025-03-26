@@ -28,11 +28,11 @@ pipeline {
         stage('Run Application') {
             steps {
                 script {
-                    def jarFile = sh(script: "ls build/libs/*.jar | head -n 1", returnStdout: true).trim()
+                    def jarFile = sh(script: "ls app/build/libs/*.jar | head -n 1", returnStdout: true).trim()
                     if (jarFile) {
                         sh "java -jar ${jarFile}"
                     } else {
-                        error "No JAR file found in build/libs/"
+                        error "No JAR file found in app/build/libs/"
                     }
                 }
             }
