@@ -15,19 +15,26 @@ pipeline {
 
         stage('Gradle Build') {
             steps {
-                sh 'gradle clean build'
+                sh './gradlew clean build' // Using the wrapper for consistency
             }
         }
 
         stage('Archive Artifact') {
             steps {
-                archiveArtifacts artifacts: 'app/build/libs/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
             }
         }
 
         stage('Run Application') {
             steps {
-                sh 'java -jar app/build/libs/*.jar'
+                script {
+                    def jarFile = sh(script: "ls build/libs/*.jar | head -n 1", returnStdout: true).trim()
+                    if (jarFile) {
+                        sh "java -jar ${jarFile}"
+                    } else {
+                        error "No JAR file found in build/libs/"
+                    }
+                }
             }
         }
     }
